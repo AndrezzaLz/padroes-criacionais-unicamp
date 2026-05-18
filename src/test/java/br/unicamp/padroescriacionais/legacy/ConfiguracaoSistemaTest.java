@@ -1,10 +1,10 @@
 package br.unicamp.padroescriacionais.legacy;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import br.unicamp.padroescriacionais.legacy.domain.ConfiguracaoSistema;
 import br.unicamp.padroescriacionais.legacy.service.ConfiguracaoService;
@@ -14,7 +14,7 @@ class ConfiguracaoSistemaTest {
     @BeforeEach
     void setUp() {
         ConfiguracaoSistema config = ConfiguracaoSistema.getInstancia();
-        config.setNomeEmpresa("RA 283981");
+        config.setNomeEmpresa("UNICAMP");
         config.setAmbiente("DEV");
         config.setDiretorioExportacao("/tmp/test");
         config.setDebugAtivo(true);
