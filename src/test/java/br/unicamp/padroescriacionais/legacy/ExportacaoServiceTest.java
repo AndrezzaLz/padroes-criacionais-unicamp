@@ -1,18 +1,20 @@
 package br.unicamp.padroescriacionais.legacy;
 
-import br.unicamp.padroescriacionais.legacy.domain.FormatoRelatorio;
-import br.unicamp.padroescriacionais.legacy.domain.Relatorio;
-import br.unicamp.padroescriacionais.legacy.domain.TipoRelatorio;
-import br.unicamp.padroescriacionais.legacy.service.ExportacaoService;
-import br.unicamp.padroescriacionais.legacy.service.RelatorioService;
+import java.io.PrintStream;
+import java.io.ByteArrayOutputStream;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.junit.jupiter.api.Assertions.*;
+import br.unicamp.padroescriacionais.legacy.domain.Relatorio;
+import br.unicamp.padroescriacionais.legacy.domain.TipoRelatorio;
+import br.unicamp.padroescriacionais.legacy.domain.FormatoRelatorio;
+import br.unicamp.padroescriacionais.legacy.service.RelatorioService;
+import br.unicamp.padroescriacionais.legacy.service.ExportacaoService;
 
 class ExportacaoServiceTest {
 
@@ -91,5 +93,17 @@ class ExportacaoServiceTest {
                     "Exportacao falhou para formato: " + formato
             );
         }
+    }
+
+    @Test
+    void deveExportarRelatorioEmXmlSemErro() {
+        Relatorio relatorio = relatorioService.criarRelatorio(TipoRelatorio.VENDAS);
+        assertDoesNotThrow(() -> exportacaoService.exportar(relatorio, FormatoRelatorio.XML));
+    }
+
+    @Test
+    void deveExportarRelatorioEmHtmlSemErro() {
+        Relatorio relatorio = relatorioService.criarRelatorio(TipoRelatorio.ESTOQUE);
+        assertDoesNotThrow(() -> exportacaoService.exportar(relatorio, FormatoRelatorio.HTML));
     }
 }

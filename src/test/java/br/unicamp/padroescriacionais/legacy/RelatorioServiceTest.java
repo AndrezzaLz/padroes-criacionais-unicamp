@@ -1,13 +1,16 @@
 package br.unicamp.padroescriacionais.legacy;
 
-import br.unicamp.padroescriacionais.legacy.domain.FormatoRelatorio;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import br.unicamp.padroescriacionais.legacy.domain.Relatorio;
 import br.unicamp.padroescriacionais.legacy.domain.TipoRelatorio;
+import br.unicamp.padroescriacionais.legacy.domain.FormatoRelatorio;
 import br.unicamp.padroescriacionais.legacy.service.RelatorioService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RelatorioServiceTest {
 
@@ -100,5 +103,25 @@ class RelatorioServiceTest {
     void conteudoDeveConterTituloDoRelatorio() {
         String resultado = service.gerarRelatorio(TipoRelatorio.VENDAS, FormatoRelatorio.PDF);
         assertTrue(resultado.contains("Vendas"), "Saida PDF deve mencionar o titulo do relatorio");
+    }
+
+    @Test
+    void deveGerarConteudoXmlComTags() {
+        String resultado = service.gerarRelatorio(TipoRelatorio.VENDAS, FormatoRelatorio.XML);
+
+        assertNotNull(resultado);
+        assertFalse(resultado.isBlank());
+        assertTrue(resultado.contains("<relatorio>"));
+        assertTrue(resultado.contains("</relatorio>"));
+    }
+
+    @Test
+    void deveGerarConteudoHtmlComTags() {
+        String resultado = service.gerarRelatorio(TipoRelatorio.ESTOQUE, FormatoRelatorio.HTML);
+
+        assertNotNull(resultado);
+        assertFalse(resultado.isBlank());
+        assertTrue(resultado.contains("<html>"));
+        assertTrue(resultado.contains("</html>"));
     }
 }
