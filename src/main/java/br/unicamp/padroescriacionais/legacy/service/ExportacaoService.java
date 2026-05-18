@@ -8,26 +8,51 @@ import br.unicamp.padroescriacionais.legacy.generator.RelatorioGenerator;
 
 public class ExportacaoService {
 
-    private ConfiguracaoSistema configuracao =
-        ConfiguracaoSistema.getInstancia();
+    private final ConfiguracaoSistema configuracao =
+            ConfiguracaoSistema.getInstancia();
 
-    RelatorioGenerator generator =
-        RelatorioGeneratorFactory.criar(formato);
+    public void exportar(
+            Relatorio relatorio,
+            FormatoRelatorio formato
+    ) {
 
-    String conteudoFormatado =
-        generator.gerar(relatorio);
+        RelatorioGenerator generator =
+                RelatorioGeneratorFactory.criar(formato);
 
-        String nomeArquivo = relatorio.getTitulo()
-                .replace(" ", "_")
-                .toLowerCase()
-                + "." + formato.name().toLowerCase();
+        String conteudoFormatado =
+                generator.gerar(relatorio);
 
-        String caminhoCompleto = configuracao.getDiretorioExportacao() + "/" + nomeArquivo;
+        String nomeArquivo =
+                relatorio.getTitulo()
+                        .replace(" ", "_")
+                        .toLowerCase()
+                        + "."
+                        + formato.name().toLowerCase();
 
-        System.out.println("[EXPORTACAO] Empresa  : " + configuracao.getNomeEmpresa());
-        System.out.println("[EXPORTACAO] Ambiente : " + configuracao.getAmbiente());
-        System.out.println("[EXPORTACAO] Arquivo  : " + caminhoCompleto);
-        System.out.println("[EXPORTACAO] Conteudo :");
+        String caminhoCompleto =
+                configuracao.getDiretorioExportacao()
+                        + "/"
+                        + nomeArquivo;
+
+        System.out.println(
+                "[EXPORTACAO] Empresa  : "
+                        + configuracao.getNomeEmpresa()
+        );
+
+        System.out.println(
+                "[EXPORTACAO] Ambiente : "
+                        + configuracao.getAmbiente()
+        );
+
+        System.out.println(
+                "[EXPORTACAO] Arquivo  : "
+                        + caminhoCompleto
+        );
+
+        System.out.println(
+                "[EXPORTACAO] Conteudo :"
+        );
+
         System.out.println(conteudoFormatado);
     }
 }
